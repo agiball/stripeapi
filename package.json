@@ -1,25 +1,26 @@
 {
-  "name": "stripeapi-1",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/agiball/stripeapi.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/agiball/stripeapi/issues"
-  },
-  "homepage": "https://github.com/agiball/stripeapi#readme",
-  "dependencies": {
-    "body-parser": "^1.19.1",
-    "compression": "^1.7.4",
-    "express": "^4.17.2",
-    "serverless-http": "^2.7.0"
-  }
+    "name": "stripeapi-1",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/agiball/stripeapi.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/agiball/stripeapi/issues"
+    },
+    "homepage": "https://github.com/agiball/stripeapi#readme",
+    "dependencies": {
+        "body-parser": "^1.19.1",
+        "compression": "^1.7.4",
+        "express": "^4.17.2",
+        "serverless-http": "^2.7.0"
+    }
 }
