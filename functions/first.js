@@ -1,7 +1,12 @@
-var express = require('express');
-var app = express();
+'use strict';
+const express = require('express');
+const serverless = require('serverless-http');
+const app = express();
+const bodyParser = require('body-parser');
 
-// respond with "hello world" when a GET request is made to the homepage
-app.get('/', function(req, res) {
-  res.send('hello world');
+app.use(bodyParser);
+app.get('/updatestate', (req, res) => {
+  res.send('test');
 });
+
+module.exports.handler = serverless(app);
