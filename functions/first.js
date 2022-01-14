@@ -1,4 +1,4 @@
 exports.handler = async () => ({
   statusCode: 200,
-  body: 'boop',
+  body: '<h1>Seawas</h1>',
 });
