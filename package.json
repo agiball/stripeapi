@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/agiball/stripeapi/issues"
   },
-  "homepage": "https://github.com/agiball/stripeapi#readme"
+  "homepage": "https://github.com/agiball/stripeapi#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
 }
