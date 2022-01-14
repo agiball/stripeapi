@@ -1,4 +1,3 @@
- 20 lines (17 sloc) 662 Bytes
 'use strict';
 const express = require('express');
 const serverless = require('serverless-http');
