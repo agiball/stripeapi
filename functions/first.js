@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser);
 app.get('/updatestate', (req, res) => {
-  res.send('test');
+  res.send({orderId: "100", sessionId: "a5sdf46a5sdf4"});
 });
 
 module.exports.handler = serverless(app);
