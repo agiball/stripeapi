@@ -1,12 +1,16 @@
-'use strict';
-const express = require('express');
-const serverless = require('serverless-http');
-const app = express();
-const bodyParser = require('body-parser');
+onst express = require("express");
+const serverless = require("serverless-http");
 
-app.use(bodyParser);
-app.get('/updatestate', (req, res) => {
-  res.send({orderId: "100", sessionId: "a5sdf46a5sdf4"});
+const app = express();
+const router = express.Router();
+
+router.get("/", (req, res) => {
+  res.json({
+    hello: "hi!"
+  });
 });
 
+app.use(`/.netlify/functions/api`, router);
+
+module.exports = app;
 module.exports.handler = serverless(app);
