@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
   res.end();
 });
 
-const BASE_URL = 'https://agistripe.netlify.app/'
+const BASE_URL = 'https://agistripe.netlify.app'
 /* create the checkout session and redirect it to the client */
 router.post("/checkout", async (req, res) => {
   try {
