@@ -18,13 +18,14 @@
     },
     "homepage": "https://github.com/agiball/stripeapi#readme",
     "dependencies": {
+        "base45": "^2.0.1",
         "body-parser": "^1.19.1",
+        "cbor": "^8.1.0",
         "compression": "^1.7.4",
         "express": "^4.17.2",
-        "serverless-http": "^2.7.0",
-        "stripe": "^8.197.0",
+        "mongodb": "^4.3.1",
         "pako": "^2.0.4",
-        "base45": "^2.0.1",
-        "cbor": "^8.1.0"
+        "serverless-http": "^2.7.0",
+        "stripe": "^8.197.0"
     }
 }
