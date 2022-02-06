@@ -45,6 +45,7 @@ router.post("/checkout", async (req, res) => {
 
     res.send({sessionId: session.id });
   } catch (err) {
+    console.log(err)
     res.status(500).send("Internal Server Error");
   }
 });
