@@ -83,12 +83,8 @@ router.get("/partner", async (req, res) => {
     .collection("partner")
     .find({})
     .toArray(function (err, results) {
-      console.log(results);
-      partnerRes = results;
+      res.send(results);
     });
-
-  if (partnerRes) res.send(partnerRes);
-  else res.send({ success: false });
 });
 router.post("/partner", async (req, res) => {
   // Insert new ticket. e.g. scan ticket qr
