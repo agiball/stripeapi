@@ -81,8 +81,9 @@ router.get("/partner", async (req, res) => {
   const partnerRes = [];
   await db
     .collection("partner")
-    .find()
+    .find({})
     .toArray(function (err, results) {
+      console.log(results);
       partnerRes = results;
     });
 
