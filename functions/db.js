@@ -68,11 +68,19 @@ router.get("/tickets/:uuid", async (req, res) => {
   else res.send({ success: false });
 });
 router.post("/tickets", async (req, res) => {
-  // Insert new ticket. e.g. scan ticket qr
   const db = await connectToDatabase();
   const entriesRes = await db.collection("tickets").insert(req.body.ticket);
 
   res.send(entriesRes);
+});
+router.get("/ticketsByUser/:nuuid", async (req, res) => {
+  const db = await connectToDatabase();
+  await db
+    .collection("ticket")
+    .find({ nnuid: req.params.nuuid })
+    .toArray(function (err, results) {
+      res.send(results);
+    });
 });
 
 /* ----- Partner ----- */
@@ -87,13 +95,30 @@ router.get("/partner", async (req, res) => {
     });
 });
 router.post("/partner", async (req, res) => {
-  // Insert new ticket. e.g. scan ticket qr
   const db = await connectToDatabase();
   const partnerRes = await db.collection("partner").insert(req.body.partner);
 
   res.send(partnerRes);
 });
 
+/* ----- User ----- */
+router.get("/user/:nuuid", async (req, res) => {
+  const db = await connectToDatabase();
+  const userRes = await db
+    .collection("user")
+    .findOne({ nuuid: req.params.nuuid });
+
+  if (userRes) res.send(userRes);
+  else res.send({ success: false });
+});
+router.post("/user", async (req, res) => {
+  const db = await connectToDatabase();
+  const userRes = await db.collection("user").insert(req.body.user);
+
+  res.send(userRes);
+});
+
+/* ----- Ticket Qr Redirect ----- */
 router.get("/redirectQr/:uuid", async (req, res) => {
   console.log(req.params.uuid);
   res.redirect("https://google.at");
