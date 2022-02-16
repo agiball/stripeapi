@@ -78,7 +78,13 @@ router.post("/tickets", async (req, res) => {
 /* ----- Partner ----- */
 router.get("/partner", async (req, res) => {
   const db = await connectToDatabase();
-  const partnerRes = await db.collection("partner").find();
+  const partnerRes = [];
+  await db
+    .collection("partner")
+    .find()
+    .toArray(function (err, results) {
+      partnerRes = results;
+    });
 
   if (partnerRes) res.send(partnerRes);
   else res.send({ success: false });
