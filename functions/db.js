@@ -76,12 +76,10 @@ router.post("/tickets", async (req, res) => {
 router.get("/ticketsByUser/:nuuid", async (req, res) => {
   const db = await connectToDatabase();
   const nuuid = req.params.nuuid;
-  console.log("nuuid " + nuuid);
   await db
     .collection("tickets")
     .find({ nuuid: nuuid.toString() })
     .toArray(function (err, results) {
-      console.log(results);
       res.send(results);
     });
 });
