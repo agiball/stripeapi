@@ -11,7 +11,6 @@ const pako = require("pako");
 // MONGODB
 const MongoClient = require("mongodb").MongoClient;
 
-
 const MONGODB_URI = `mongodb+srv://agiAdmin:${process.env.MONGO_PASS}@agiball.g14rh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 // Once we connect to the database once, we'll store that connection and reuse it so that we don't have to connect to the database on every request.
@@ -39,10 +38,11 @@ async function connectToDatabase() {
 const router = express.Router();
 router.get("/", (req, res) => {
   res.writeHead(200, { "Content-Type": "text/html" });
-  res.write("<h1>This is the api for the agiball!</h1>");
+  res.write("<h1>This is the api for the agiball! Mongodb part</h1>");
   res.end();
 });
 
+/* ----- Entries ----- */
 router.get("/entries", async (req, res) => {
   const db = await connectToDatabase();
   const entriesRes = await db.collection("entries").findOne();
@@ -54,6 +54,22 @@ router.post("/entries", async (req, res) => {
   // Insert new entry. e.g. scan ticket qr
   const db = await connectToDatabase();
   const entriesRes = await db.collection("entries").insert(req.body.entry);
+
+  res.send(entriesRes);
+});
+
+/* ----- Tickets ----- */
+router.get("/tickets/:uuid", async (req, res) => {
+  const uuid = req.params.uuid;
+  const db = await connectToDatabase();
+  const ticketRes = await db.collection("tickets").findOne({ uuid: uuid });
+
+  res.send(ticketRes);
+});
+router.post("/tickets", async (req, res) => {
+  // Insert new ticket. e.g. scan ticket qr
+  const db = await connectToDatabase();
+  const entriesRes = await db.collection("tickets").insert(req.body.ticket);
 
   res.send(entriesRes);
 });
