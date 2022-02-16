@@ -76,7 +76,7 @@ router.post("/tickets", async (req, res) => {
 router.get("/ticketsByUser/:nuuid", async (req, res) => {
   const db = await connectToDatabase();
   await db
-    .collection("ticket")
+    .collection("tickets")
     .find({ nnuid: req.params.nuuid })
     .toArray(function (err, results) {
       res.send(results);
