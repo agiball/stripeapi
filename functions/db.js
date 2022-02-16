@@ -75,6 +75,22 @@ router.post("/tickets", async (req, res) => {
   res.send(entriesRes);
 });
 
+/* ----- Partner ----- */
+router.get("/partner", async (req, res) => {
+  const db = await connectToDatabase();
+  const partnerRes = await db.collection("partner").find();
+
+  if (partnerRes) res.send(partnerRes);
+  else res.send({ success: false });
+});
+router.post("/partner", async (req, res) => {
+  // Insert new ticket. e.g. scan ticket qr
+  const db = await connectToDatabase();
+  const partnerRes = await db.collection("partner").insert(req.body.partner);
+
+  res.send(partnerRes);
+});
+
 router.get("/redirectQr/:uuid", async (req, res) => {
   console.log(req.params.uuid);
   res.redirect("https://google.at");
