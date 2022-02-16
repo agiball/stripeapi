@@ -79,7 +79,7 @@ router.get("/ticketsByUser/:nuuid", async (req, res) => {
   console.log("nuuid " + nuuid);
   await db
     .collection("tickets")
-    .find({ nnuid: nuuid })
+    .find({ nuuid: "dXUWYR2Kb6TwinMSMYYY8zIxZcG3" })
     .toArray(function (err, results) {
       console.log(results);
       res.send(results);
