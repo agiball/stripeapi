@@ -79,6 +79,7 @@ router.get("/ticketsByUser/:nuuid", async (req, res) => {
     .collection("tickets")
     .find({ nnuid: req.params.nuuid })
     .toArray(function (err, results) {
+      console.log(results);
       res.send(results);
     });
 });
