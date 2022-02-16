@@ -64,7 +64,8 @@ router.get("/tickets/:uuid", async (req, res) => {
   const db = await connectToDatabase();
   const ticketRes = await db.collection("tickets").findOne({ uuid: uuid });
 
-  res.send(ticketRes);
+  if (ticketRes) res.send(ticketRes);
+  else res.send({ success: false });
 });
 router.post("/tickets", async (req, res) => {
   // Insert new ticket. e.g. scan ticket qr
