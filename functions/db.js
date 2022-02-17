@@ -161,6 +161,17 @@ router.post("/proceedOrder", async (req, res) => {
   res.send({ orderId: orderObject.orderId });
 });
 
+/* ----- Blog ----- */
+router.get("/blog", async (req, res) => {
+  const db = await connectToDatabase();
+  await db
+    .collection("blog")
+    .find({})
+    .toArray(function (err, results) {
+      res.send(results);
+    });
+});
+
 /* ----- Ticket Qr Redirect ----- */
 router.get("/redirectQr/:uuid", async (req, res) => {
   console.log(req.params.uuid);
