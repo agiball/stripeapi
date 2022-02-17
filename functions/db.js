@@ -129,7 +129,7 @@ router.post("/order", async (req, res) => {
 });
 
 router.post("/proceedOrder", async (req, res) => {
-  //const db = await connectToDatabase();
+  const db = await connectToDatabase();
 
   let orderObject = {
     orderId: uuidv4(),
