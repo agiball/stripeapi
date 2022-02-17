@@ -157,7 +157,7 @@ router.post("/proceedOrder", async (req, res) => {
 
   await db.collection("orders").insert(orderObject);
 
-  res.send(orderObject);
+  res.send({ orderId: orderObject.orderId });
 });
 
 /* ----- Ticket Qr Redirect ----- */
