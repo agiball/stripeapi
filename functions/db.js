@@ -8,6 +8,7 @@ const base45 = require("base45");
 const cbor = require("cbor");
 const pako = require("pako");
 const uidMaker = require("uuid");
+const orderid = require("order-id")("key");
 
 // MONGODB
 const MongoClient = require("mongodb").MongoClient;
@@ -131,7 +132,7 @@ router.post("/order", async (req, res) => {
 router.post("/proceedOrder", async (req, res) => {
   const db = await connectToDatabase();
   let orderObject = {
-    orderId: uidMaker.v4(),
+    orderId: orderid.generate(new Date()),
     orderTime: new Date(),
     customer: { email: "max.mustermann@gmx.at", nuuid: "notgiven" },
     tickets: [],

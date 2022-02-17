@@ -26,6 +26,7 @@
         "express": "^4.17.2",
         "mongodb": "^4.3.1",
         "netlify-cli": "^8.16.1",
+        "order-id": "^2.1.2",
         "pako": "^2.0.4",
         "serverless-http": "^2.7.0",
         "stripe": "^8.197.0",
