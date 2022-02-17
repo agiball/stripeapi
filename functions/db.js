@@ -130,19 +130,25 @@ router.post("/order", async (req, res) => {
 
 router.post("/proceedOrder", async (req, res) => {
   const db = await connectToDatabase();
-
   let orderObject = {
     orderId: uidMaker.v4(),
     orderTime: new Date(),
-    customer: "notgiven",
+    customer: { email: "max.mustermann@gmx.at", nuuid: "notgiven" },
     tickets: [],
   };
+
+  orderObject.customer.email = req.body.customer.email;
+  orderObject.customer.nuuid = req.body.customer.nuuid
+    ? req.body.customer.nuuid
+    : "notgiven";
+
   req.body.tickets.forEach(async (element) => {
     const ticketInsert = {
       uuid: uidMaker.v4(),
       activationTime: new Date(),
       status: "ORDERED",
       type: element.type,
+      customer: req.body.customer.nuuid ? req.body.customer.nuuid : "notgiven",
     };
     console.log(ticketInsert);
     orderObject.tickets.push({ uuid: ticketInsert.uuid });
