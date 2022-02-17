@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const base45 = require("base45");
 const cbor = require("cbor");
 const pako = require("pako");
+import { v4 as uuidv4 } from "uuid";
 
 // MONGODB
 const MongoClient = require("mongodb").MongoClient;
@@ -117,6 +118,40 @@ router.post("/user", async (req, res) => {
   const userRes = await db.collection("user").insert(req.body.user);
 
   res.send(userRes);
+});
+
+/* ----- Orders ----- */
+router.post("/order", async (req, res) => {
+  const db = await connectToDatabase();
+  const orderRes = await db.collection("orders").insert(req.body.order);
+
+  res.send(orderRes);
+});
+
+router.post("/proceedOrder", async (req, res) => {
+  //const db = await connectToDatabase();
+
+  let orderObject = {
+    orderId: uuidv4(),
+    orderTime: new Date(),
+    customer: "notgiven",
+    tickets: [],
+  };
+  req.body.tickets.forEach(async (element) => {
+    const ticketInsert = {
+      uuid: uuidv4(),
+      activationTime: new Date(),
+      status: "ORDERED",
+      type: element.type,
+    };
+    console.log(ticketInsert);
+    orderObject.tickets.push({ uuid: ticketInsert.uuid });
+    await db.collection("tickets").insert(ticketInsert);
+  });
+
+  await db.collection("orders").insert(orderObject);
+
+  res.send(orderObject);
 });
 
 /* ----- Ticket Qr Redirect ----- */

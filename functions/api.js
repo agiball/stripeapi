@@ -3,7 +3,7 @@ const express = require("express");
 const serverless = require("serverless-http");
 const app = express();
 const bodyParser = require("body-parser");
-const stripe = require('stripe')(process.env.STRIPE_PRIVATE);
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE);
 
 const router = express.Router();
 router.get("/", (req, res) => {
@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
   res.end();
 });
 
-const BASE_URL = 'https://agistripe.netlify.app'
+const BASE_URL = "https://agistripe.netlify.app";
 /* create the checkout session and redirect it to the client */
 router.post("/checkout", async (req, res) => {
   try {
@@ -20,7 +20,7 @@ router.post("/checkout", async (req, res) => {
     for (let i = 0; i < req.body.items.length; i++) {
       order_items.push({
         price: req.body.items[i].price,
-        quantity: req.body.items[i].quantity
+        quantity: req.body.items[i].quantity,
       });
     }
     let success_url = "";
@@ -43,18 +43,17 @@ router.post("/checkout", async (req, res) => {
       customer_email: req.body.costumer.email,
     });
 
-    res.send({sessionId: session.id });
+    res.send({ sessionId: session.id });
   } catch (err) {
-    console.log(err)
+    console.log(err);
     res.status(500).send("Internal Server Error");
   }
 });
 
 /* actually show the checkout page */
-router.get('/web/checkout/redirect', async (req, res) => {
-  const checkoutHtmlPage = (stripePublicKey, sessionId) => {  
-    return (
-    `<html>
+router.get("/web/checkout/redirect", async (req, res) => {
+  const checkoutHtmlPage = (stripePublicKey, sessionId) => {
+    return `<html>
       <body>
         <!-- Load Stripe.js on your website. -->
         <script src="https://js.stripe.com/v3"></script>
@@ -77,15 +76,14 @@ router.get('/web/checkout/redirect', async (req, res) => {
           })();
         </script>
       </body>
-    </html>`
-    );
-  }
+    </html>`;
+  };
   res.send(checkoutHtmlPage(process.env.STRIPE_PUBLIC, req.query.sessionId));
-})
+});
 
 /* handle success and cancel */
-router.get('/payment/success', (req, res) => {
-  if(req.query.platform === 'web') {
+router.get("/payment/success", (req, res) => {
+  if (req.query.platform === "web") {
     const checkoutSuccessHtmlPage = `
     <html>
       <body>
@@ -94,15 +92,13 @@ router.get('/payment/success', (req, res) => {
           window.close();
         </script>
       </body>
-    </html>`
+    </html>`;
     res.send(checkoutSuccessHtmlPage);
-  }
-  else
-    res.json({success: true});
+  } else res.json({ success: true });
 });
 
-router.get('/payment/cancel', (req, res) => {
-  if(req.query.platform === 'web') {
+router.get("/payment/cancel", (req, res) => {
+  if (req.query.platform === "web") {
     const checkoutCanceledHtmlPage = `
     <html>
       <body>
@@ -111,21 +107,18 @@ router.get('/payment/cancel', (req, res) => {
           window.close();
         </script>
       </body>
-    </html>`
+    </html>`;
     res.send(checkoutCanceledHtmlPage);
-  }
-  else
-    res.json({success: false});
+  } else res.json({ success: false });
 });
 
-
 /* webhook for handling actual fulfilment */
-router.post('/stripe/webhook', async (req, res) => {
+router.post("/stripe/webhook", async (req, res) => {
   try {
-    const sig = req.headers['stripe-signature'];
+    const sig = req.headers["stripe-signature"];
     let event;
     event = stripe.webhooks.constructEvent(req.body, sig, stripeWebhookSecret);
-    if (event.type === 'checkout.session.completed') {
+    if (event.type === "checkout.session.completed") {
       const session = event.data.object;
       console.log(session);
       // Fulfill the purchase...
@@ -135,12 +128,11 @@ router.post('/stripe/webhook', async (req, res) => {
     console.log(err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
-  res.json({received: true});
+  res.json({ received: true });
 });
 
-
 app.use(bodyParser.json());
-app.use('/stripe/webhook', express.raw({type: "*/*"}))
+app.use("/stripe/webhook", express.raw({ type: "*/*" }));
 app.use("/.netlify/functions/api", router); // path must route to lambda
 
 module.exports = app;
